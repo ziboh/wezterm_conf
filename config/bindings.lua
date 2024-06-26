@@ -16,10 +16,10 @@ end
 -- stylua: ignore
 local keys = {
    -- misc/useful --
-   { key = 'F1', mods = 'NONE', action = 'ActivateCopyMode' },
-   { key = 'F2', mods = 'NONE', action = act.ActivateCommandPalette },
-   { key = 'F3', mods = 'NONE', action = act.ShowLauncher },
-   { key = 'F4', mods = 'NONE', action = act.ShowLauncherArgs({ flags = 'FUZZY|TABS' }) },
+   { key = 'F10', mods = 'NONE',    action = 'ActivateCopyMode' },
+   { key = 'p',   mods = mod.SUPER, action = act.ActivateCommandPalette },
+   { key = 'l',   mods = mod.SUPER, action = act.ShowLauncher },
+   { key = 'o',   mods = mod.SUPER, action = act.ShowLauncherArgs({ flags = 'FUZZY|TABS' }) },
    {
       key = 'F5',
       mods = 'NONE',
@@ -52,6 +52,7 @@ local keys = {
    { key = 'LeftArrow',  mods = mod.SUPER,     action = act.SendString '\x1bOH' },
    { key = 'RightArrow', mods = mod.SUPER,     action = act.SendString '\x1bOF' },
    { key = 'Backspace',  mods = mod.SUPER,     action = act.SendString '\x15' },
+   { key = "/",          mods = "CTRL",        action = wezterm.action { SendString = "\x1f" } },
 
    -- copy/paste --
    { key = 'c',          mods = 'CTRL|SHIFT',  action = act.CopyTo('Clipboard') },
@@ -59,19 +60,32 @@ local keys = {
 
    -- tabs --
    -- tabs: spawn+close
-   { key = 't',          mods = mod.SUPER,     action = act.SpawnTab('DefaultDomain') },
-   { key = 't',          mods = mod.SUPER_REV, action = act.SpawnTab({ DomainName = 'WSL:Ubuntu' }) },
+   { key = '1',          mods = mod.SUPER,     action = act.SpawnTab('DefaultDomain') },
    { key = 'w',          mods = mod.SUPER_REV, action = act.CloseCurrentTab({ confirm = false }) },
+   {
+      key = '2',
+      mods = mod.SUPER,
+      action = wezterm.action.SpawnCommandInNewTab {
+         args = { 'ssh', 'zibo@192.168.0.88' },
+      },
+   },
+   {
+      key = '3',
+      mods = mod.SUPER,
+      action = wezterm.action.SpawnCommandInNewTab {
+         args = { 'ssh', 'root@huaweicloud' },
+      },
+   },
 
    -- tabs: navigation
-   { key = '[',          mods = mod.SUPER,     action = act.ActivateTabRelative(-1) },
-   { key = ']',          mods = mod.SUPER,     action = act.ActivateTabRelative(1) },
-   { key = '[',          mods = mod.SUPER_REV, action = act.MoveTabRelative(-1) },
-   { key = ']',          mods = mod.SUPER_REV, action = act.MoveTabRelative(1) },
+   { key = '[', mods = mod.SUPER,     action = act.ActivateTabRelative(-1) },
+   { key = ']', mods = mod.SUPER,     action = act.ActivateTabRelative(1) },
+   { key = '[', mods = mod.SUPER_REV, action = act.MoveTabRelative(-1) },
+   { key = ']', mods = mod.SUPER_REV, action = act.MoveTabRelative(1) },
 
    -- window --
    -- spawn windows
-   { key = 'n',          mods = mod.SUPER,     action = act.SpawnWindow },
+   { key = 'n', mods = mod.SUPER,     action = act.SpawnWindow },
 
    -- background controls --
    {
@@ -191,7 +205,7 @@ local mouse_bindings = {
 
 return {
    disable_default_key_bindings = true,
-   leader = { key = 'Space', mods = mod.SUPER_REV },
+   leader = { key = 'l', mods = mod.SUPER_REV },
    keys = keys,
    key_tables = key_tables,
    mouse_bindings = mouse_bindings,
