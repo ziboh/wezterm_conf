@@ -6,7 +6,6 @@ local nf = wezterm.nerdfonts
 
 local GLYPH_SEMI_CIRCLE_LEFT = nf.ple_left_half_circle_thick --[[ '' ]]
 local GLYPH_SEMI_CIRCLE_RIGHT = nf.ple_right_half_circle_thick --[[ '' ]]
-local GLYPH_CIRCLE = nf.fa_circle --[[ '' ]]
 local GLYPH_ADMIN = nf.md_shield_half_full --[[ '󰞀' ]]
 
 local M = {}
@@ -27,10 +26,10 @@ end
 
 local _set_title = function(process_name, base_title, max_width, inset)
    local title
-   inset = inset or 6
+   inset = inset or 4
 
    if process_name:len() > 0 then
-      title = process_name .. ' ~ ' .. base_title
+      title = '[' .. process_name .. '] ' .. base_title
    else
       title = base_title
    end
@@ -61,15 +60,40 @@ local _push = function(bg, fg, attribute, text)
    table.insert(__cells__, { Text = text })
 end
 
+local simplify_process_name = function(process_name)
+   local name_table = {
+      wslhost = 'wsl',
+      ['mosh-client'] = 'mosh',
+   }
+
+   local new_name = name_table[process_name]
+   if new_name ~= nil then
+      return new_name
+   else
+      return process_name
+   end
+end
+
+local simplify_title = function(title)
+   local new_title = title:match('%s*%[[^]]+%]%s*(.*)')
+   if new_title == nil then
+      return title
+   else
+      return new_title
+   end
+end
+
 M.setup = function()
    wezterm.on('format-tab-title', function(tab, _tabs, _panes, _config, hover, max_width)
       __cells__ = {}
-
       local bg
       local fg
       local process_name = _set_process_name(tab.active_pane.foreground_process_name)
+      process_name = simplify_process_name(process_name)
       local is_admin = _check_if_admin(tab.active_pane.title)
-      local title = _set_title(process_name, tab.active_pane.title, max_width, (is_admin and 8))
+
+      local title = simplify_title(tab.active_pane.title)
+      title = _set_title(process_name, title, max_width, (is_admin and 8))
 
       -- local title = _set_process_name(tab.active_pane.tty_name)
       if tab.is_active then
@@ -83,14 +107,6 @@ M.setup = function()
          fg = colors.default.fg
       end
 
-      local has_unseen_output = false
-      for _, pane in ipairs(tab.panes) do
-         if pane.has_unseen_output then
-            has_unseen_output = true
-            break
-         end
-      end
-
       -- Left semi-circle
       _push('rgba(0, 0, 0, 0.4)', bg, { Intensity = 'Bold' }, GLYPH_SEMI_CIRCLE_LEFT)
 
@@ -101,11 +117,6 @@ M.setup = function()
 
       -- Title
       _push(bg, fg, { Intensity = 'Bold' }, ' ' .. title)
-
-      -- Unseen output alert
-      if has_unseen_output then
-         _push(bg, '#FFA066', { Intensity = 'Bold' }, ' ' .. GLYPH_CIRCLE)
-      end
 
       -- Right padding
       _push(bg, fg, { Intensity = 'Bold' }, ' ')

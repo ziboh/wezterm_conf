@@ -13,21 +13,20 @@ elseif platform.is_win or platform.is_linux then
    mod.SUPER_REV = 'ALT|CTRL'
 end
 
--- stylua: ignore
 local keys = {
    -- misc/useful --
-   { key = 'F10', mods = 'NONE',    action = 'ActivateCopyMode' },
-   { key = 'p',   mods = mod.SUPER, action = act.ActivateCommandPalette },
-   { key = 'l',   mods = mod.SUPER, action = act.ShowLauncher },
-   { key = 'o',   mods = mod.SUPER, action = act.ShowLauncherArgs({ flags = 'FUZZY|TABS' }) },
+   { key = 'F10', mods = 'NONE', action = 'ActivateCopyMode' },
+   { key = 's', mods = mod.SUPER, action = act.ActivateCommandPalette },
+   { key = 'l', mods = mod.SUPER, action = act.ShowLauncher },
+   { key = 'o', mods = mod.SUPER, action = act.ShowLauncherArgs({ flags = 'FUZZY|TABS' }) },
    {
       key = 'F5',
       mods = 'NONE',
       action = act.ShowLauncherArgs({ flags = 'FUZZY|WORKSPACES' }),
    },
-   { key = 'F11', mods = 'NONE',    action = act.ToggleFullScreen },
-   { key = 'F12', mods = 'NONE',    action = act.ShowDebugOverlay },
-   { key = 'f',   mods = mod.SUPER, action = act.Search({ CaseInSensitiveString = '' }) },
+   { key = 'F11', mods = 'NONE', action = act.ToggleFullScreen },
+   { key = 'F12', mods = 'NONE', action = act.ShowDebugOverlay },
+   { key = 'f', mods = mod.SUPER, action = act.Search({ CaseInSensitiveString = '' }) },
    {
       key = 'u',
       mods = mod.SUPER,
@@ -38,7 +37,7 @@ local keys = {
             '\\[(https?://\\S+)\\]',
             '\\{(https?://\\S+)\\}',
             '<(https?://\\S+)>',
-            '\\bhttps?://\\S+[)/a-zA-Z0-9-]+'
+            '\\bhttps?://\\S+[)/a-zA-Z0-9-]+',
          },
          action = wezterm.action_callback(function(window, pane)
             local url = window:get_selection_text_for_pane(pane)
@@ -49,43 +48,51 @@ local keys = {
    },
 
    -- cursor movement --
-   { key = 'LeftArrow',  mods = mod.SUPER,     action = act.SendString '\x1bOH' },
-   { key = 'RightArrow', mods = mod.SUPER,     action = act.SendString '\x1bOF' },
-   { key = 'Backspace',  mods = mod.SUPER,     action = act.SendString '\x15' },
-   { key = "/",          mods = "CTRL",        action = wezterm.action { SendString = "\x1f" } },
+   { key = 'LeftArrow', mods = mod.SUPER, action = act.SendString('\x1bOH') },
+   { key = 'RightArrow', mods = mod.SUPER, action = act.SendString('\x1bOF') },
+   { key = 'Backspace', mods = mod.SUPER, action = act.SendString('\x15') },
+   { key = '/', mods = 'CTRL', action = wezterm.action({ SendString = '\x1f' }) },
 
    -- copy/paste --
-   { key = 'c',          mods = 'CTRL|SHIFT',  action = act.CopyTo('Clipboard') },
-   { key = 'v',          mods = 'CTRL|SHIFT',  action = act.PasteFrom('Clipboard') },
+   { key = 'c', mods = 'CTRL|SHIFT', action = act.CopyTo('Clipboard') },
+   { key = 'v', mods = 'CTRL|SHIFT', action = act.PasteFrom('Clipboard') },
 
    -- tabs --
    -- tabs: spawn+close
-   { key = '1',          mods = mod.SUPER,     action = act.SpawnTab('DefaultDomain') },
-   { key = 'w',          mods = mod.SUPER_REV, action = act.CloseCurrentTab({ confirm = false }) },
+   { key = 'w', mods = mod.SUPER_REV, action = act.CloseCurrentTab({ confirm = false }) },
+   {
+      key = '1',
+      mods = mod.SUPER,
+      action = act.SpawnCommandInNewTab({
+         domain = { DomainName = 'WSL:Ubuntu-24.04.1' },
+      }),
+   },
    {
       key = '2',
       mods = mod.SUPER,
-      action = wezterm.action.SpawnCommandInNewTab {
-         args = { 'ssh', 'zibo@192.168.0.88' },
-      },
+      action = wezterm.action.SpawnCommandInNewTab({
+         domain = { DomainName = 'local' },
+      }),
    },
    {
       key = '3',
       mods = mod.SUPER,
-      action = wezterm.action.SpawnCommandInNewTab {
-         args = { 'ssh', 'root@huaweicloud' },
-      },
+      action = wezterm.action.SpawnCommandInNewTab({
+         label = 'SSH Ubuntu',
+         args = { 'ssh', 'zibo@ubuntu' },
+         domain = { DomainName = 'local' },
+      }),
    },
 
    -- tabs: navigation
-   { key = '[', mods = mod.SUPER,     action = act.ActivateTabRelative(-1) },
-   { key = ']', mods = mod.SUPER,     action = act.ActivateTabRelative(1) },
+   { key = '[', mods = mod.SUPER, action = act.ActivateTabRelative(-1) },
+   { key = ']', mods = mod.SUPER, action = act.ActivateTabRelative(1) },
    { key = '[', mods = mod.SUPER_REV, action = act.MoveTabRelative(-1) },
    { key = ']', mods = mod.SUPER_REV, action = act.MoveTabRelative(1) },
 
    -- window --
    -- spawn windows
-   { key = 'n', mods = mod.SUPER,     action = act.SpawnWindow },
+   { key = 'n', mods = mod.SUPER, action = act.SpawnWindow },
 
    -- background controls --
    {
@@ -138,14 +145,14 @@ local keys = {
    },
 
    -- panes: zoom+close pane
-   { key = 'Enter', mods = mod.SUPER,     action = act.TogglePaneZoomState },
-   { key = 'w',     mods = mod.SUPER,     action = act.CloseCurrentPane({ confirm = false }) },
+   { key = 'Enter', mods = mod.SUPER, action = act.TogglePaneZoomState },
+   { key = 'w', mods = mod.SUPER, action = act.CloseCurrentPane({ confirm = false }) },
 
    -- panes: navigation
-   { key = 'k',     mods = mod.SUPER_REV, action = act.ActivatePaneDirection('Up') },
-   { key = 'j',     mods = mod.SUPER_REV, action = act.ActivatePaneDirection('Down') },
-   { key = 'h',     mods = mod.SUPER_REV, action = act.ActivatePaneDirection('Left') },
-   { key = 'l',     mods = mod.SUPER_REV, action = act.ActivatePaneDirection('Right') },
+   { key = 'k', mods = mod.SUPER_REV, action = act.ActivatePaneDirection('Up') },
+   { key = 'j', mods = mod.SUPER_REV, action = act.ActivatePaneDirection('Down') },
+   { key = 'h', mods = mod.SUPER_REV, action = act.ActivatePaneDirection('Left') },
+   { key = 'l', mods = mod.SUPER_REV, action = act.ActivatePaneDirection('Right') },
    {
       key = 'p',
       mods = mod.SUPER_REV,
@@ -195,11 +202,37 @@ local key_tables = {
 }
 
 local mouse_bindings = {
+   {
+      event = { Down = { streak = 1, button = 'Right' } },
+      mods = 'NONE',
+      action = wezterm.action_callback(function(window, pane)
+         local selection = window:get_selection_text_for_pane(pane)
+
+         if selection ~= '' then
+            window:copy_to_clipboard(selection, 'Clipboard')
+            window:perform_action(wezterm.action.ClearSelection, pane)
+         else
+            window:perform_action(wezterm.action.PasteFrom('Clipboard'), pane)
+         end
+      end),
+   },
+   -- Disable the default click behavior
+   {
+      event = { Up = { streak = 1, button = 'Left' } },
+      mods = 'NONE',
+      action = wezterm.action.DisableDefaultAssignment,
+   },
    -- Ctrl-click will open the link under the mouse cursor
    {
       event = { Up = { streak = 1, button = 'Left' } },
       mods = 'CTRL',
-      action = act.OpenLinkAtMouseCursor,
+      action = wezterm.action.OpenLinkAtMouseCursor,
+   },
+   -- Disable the Ctrl-click down event to stop programs from seeing it when a URL is clicked
+   {
+      event = { Down = { streak = 1, button = 'Left' } },
+      mods = 'CTRL',
+      action = wezterm.action.Nop,
    },
 }
 

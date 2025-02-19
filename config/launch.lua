@@ -1,37 +1,28 @@
-local platform = require('utils.platform')()
-
 local options = {
    default_prog = {},
    launch_menu = {},
 }
 
-if platform.is_win then
-   options.default_prog = { 'pwsh' }
-   options.launch_menu = {
-      { label = 'PowerShell Core', args = { 'pwsh' } },
-      { label = 'PowerShell Desktop', args = { 'powershell' } },
-      { label = 'Command Prompt', args = { 'cmd' } },
-      { label = 'Huawei Cloud', args = { 'ssh', 'root@huaweicloud' } },
-      {
-         label = 'Git Bash',
-         args = { 'bash.exe' },
-      },
-   }
-elseif platform.is_mac then
-   options.default_prog = { '/opt/homebrew/bin/fish', '-l' }
-   options.launch_menu = {
-      { label = 'Bash', args = { 'bash', '-l' } },
-      { label = 'Fish', args = { '/opt/homebrew/bin/fish', '-l' } },
-      { label = 'Nushell', args = { '/opt/homebrew/bin/nu', '-l' } },
-      { label = 'Zsh', args = { 'zsh', '-l' } },
-   }
-elseif platform.is_linux then
-   options.default_prog = { 'fish', '-l' }
-   options.launch_menu = {
-      { label = 'Bash', args = { 'bash', '-l' } },
-      { label = 'Fish', args = { 'fish', '-l' } },
-      { label = 'Zsh', args = { 'zsh', '-l' } },
-   }
-end
+options.default_prog = { 'pwsh', '-NoLogo' }
+options.launch_menu = {
+   { label = 'PowerShell 7', args = { 'pwsh', '-NoLogo' }, domain = { DomainName = 'local' } },
+   {
+      label = 'Git Bash',
+      args = { 'D:\\scoop\\apps\\git\\current\\bin\\bash.exe' },
+      domain = { DomainName = 'local' },
+   },
+   {
+      label = 'SSH Ubuntu',
+      args = { 'ssh', 'zibo@ubuntu' },
+      domain = { DomainName = 'local' },
+   },
+   {
+      label = 'Orcal Cloud',
+      args = { 'mosh.exe', 'ubuntu@oraclecloud' },
+      domain = { DomainName = 'local' },
+   },
+   { label = 'Command Prompt', args = { 'cmd' }, domain = { DomainName = 'local' } },
+   { label = 'PowerShell 5', args = { 'powershell' }, domain = { DomainName = 'local' } },
+}
 
 return options
