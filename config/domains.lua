@@ -12,6 +12,7 @@ return {
       {
          name = 'WSL:Ubuntu-24.04.1',
          distribution = 'Ubuntu',
+         default_cwd = "~"
       },
    },
    default_domain = 'WSL:Ubuntu-24.04.1',

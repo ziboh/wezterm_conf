@@ -3,9 +3,10 @@ local options = {
    launch_menu = {},
 }
 
-options.default_prog = { 'pwsh', '-NoLogo' }
+options.default_prog = { 'nu' }
 options.launch_menu = {
    { label = 'PowerShell 7', args = { 'pwsh', '-NoLogo' }, domain = { DomainName = 'local' } },
+   { label = 'NuShell', args = { 'nu' }, domain = { DomainName = 'local' } },
    {
       label = 'Git Bash',
       args = { 'D:\\scoop\\apps\\git\\current\\bin\\bash.exe' },

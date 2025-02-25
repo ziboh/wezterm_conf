@@ -1,6 +1,5 @@
 local wezterm = require('wezterm')
 local platform = require('utils.platform')()
-local colors = require('colors.custom')
 
 -- Seeding random numbers before generating for use
 -- Known issue with lua math library
@@ -55,7 +54,7 @@ function BackDrops:_set_opt(window)
             horizontal_align = 'Center',
          },
          {
-            source = { Color = colors.background },
+            source = { Color = '#1f1f28' },
             height = '100%',
             width = '100%',
             opacity = 0.96,

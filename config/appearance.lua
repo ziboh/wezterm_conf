@@ -1,17 +1,14 @@
 local wezterm = require('wezterm')
 local gpu_adapters = require('utils.gpu_adapter')
--- local colors = require('colors.custom')
 local fonts = require('config.fonts')
 
 return {
-   term = 'xterm-256color',
-   animation_fps = 60,
-   max_fps = 60,
+   max_fps = 120,
    front_end = 'WebGpu',
    webgpu_power_preference = 'HighPerformance',
    webgpu_preferred_adapter = gpu_adapters:pick_best(),
+
    -- color scheme
-   -- colors = colors,
    color_scheme = 'Gruvbox dark, medium (base16)',
 
    -- background
@@ -37,23 +34,20 @@ return {
    -- scrollbar
    enable_scroll_bar = true,
    min_scroll_bar_height = '3cell',
-   colors = {
-      scrollbar_thumb = '#34354D',
-   },
 
    -- tab bar
    enable_tab_bar = true,
    hide_tab_bar_if_only_one_tab = false,
    use_fancy_tab_bar = true,
-   tab_max_width = 25,
-   show_tab_index_in_tab_bar = true,
+   tab_max_width = 21,
    switch_to_last_active_tab_when_closing_tab = true,
 
    -- cursor
+   animation_fps = 120,
+   cursor_blink_ease_in = 'EaseOut',
+   cursor_blink_ease_out = 'EaseOut',
    default_cursor_style = 'BlinkingBlock',
-   cursor_blink_ease_in = 'Constant',
-   cursor_blink_ease_out = 'Constant',
-   cursor_blink_rate = 700,
+   cursor_blink_rate = 650,
 
    -- window
    adjust_window_size_when_changing_font_size = false,
