@@ -68,14 +68,14 @@ local keys = {
       }),
    },
    {
-      key = '2',
+      key = '1',
       mods = mod.SUPER,
       action = wezterm.action.SpawnCommandInNewTab({
          domain = { DomainName = 'local' },
       }),
    },
    {
-      key = '3',
+      key = '2',
       mods = mod.SUPER,
       action = wezterm.action.SpawnCommandInNewTab({
          label = 'SSH Ubuntu',
