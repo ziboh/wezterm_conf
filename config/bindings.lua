@@ -63,13 +63,6 @@ local keys = {
    {
       key = '1',
       mods = mod.SUPER,
-      action = act.SpawnCommandInNewTab({
-         domain = { DomainName = 'WSL:Ubuntu-24.04.1' },
-      }),
-   },
-   {
-      key = '1',
-      mods = mod.SUPER,
       action = wezterm.action.SpawnCommandInNewTab({
          domain = { DomainName = 'local' },
       }),
@@ -78,8 +71,17 @@ local keys = {
       key = '2',
       mods = mod.SUPER,
       action = wezterm.action.SpawnCommandInNewTab({
-         label = 'SSH Ubuntu',
-         args = { 'ssh', 'zibo@ubuntu' },
+         label = 'Pwsh',
+         args = { 'pwsh', '-NoLogo' },
+         domain = { DomainName = 'local' },
+      }),
+   },
+   {
+      key = '3',
+      mods = mod.SUPER,
+      action = wezterm.action.SpawnCommandInNewTab({
+         label = 'SSH OracleCloud',
+         args = { 'ssh', 'ubuntu@oraclecloud' },
          domain = { DomainName = 'local' },
       }),
    },

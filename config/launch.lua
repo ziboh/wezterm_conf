@@ -13,11 +13,6 @@ options.launch_menu = {
       domain = { DomainName = 'local' },
    },
    {
-      label = 'SSH Ubuntu',
-      args = { 'ssh', 'zibo@ubuntu' },
-      domain = { DomainName = 'local' },
-   },
-   {
       label = 'Orcal Cloud',
       args = { 'mosh.exe', 'ubuntu@oraclecloud' },
       domain = { DomainName = 'local' },

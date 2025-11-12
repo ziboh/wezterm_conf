@@ -4,7 +4,6 @@ local wezterm = require('wezterm')
 ---@field options table
 local Config = {}
 Config.__index = Config
-
 ---Initialize Config
 ---@return Config
 function Config:init()
