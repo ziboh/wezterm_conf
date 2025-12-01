@@ -2,12 +2,12 @@ local wezterm = require('wezterm')
 local gpu_adapters = require('utils.gpu_adapter')
 local fonts = require('config.fonts')
 
-return {
+local M = {
    max_fps = 120,
    front_end = 'WebGpu',
    webgpu_power_preference = 'HighPerformance',
    webgpu_preferred_adapter = gpu_adapters:pick_best(),
-
+   -- default_ssh_auth_sock = '\\\\.\\pipe\\openssh-ssh-agent',
    -- color scheme
    color_scheme = 'Gruvbox dark, medium (base16)',
 
@@ -73,3 +73,5 @@ return {
    },
    inactive_pane_hsb = { saturation = 1.0, brightness = 1.0 },
 }
+
+return M

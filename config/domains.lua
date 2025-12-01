@@ -1,12 +1,12 @@
 return {
    -- ref: https://wezfurlong.org/wezterm/config/lua/SshDomain.html
-   -- ssh_domains = {
-   --    {
-   --       name = 'LocalUbuntu',
-   --       remote_address = '192.168.0.88',
-   --       username = 'zibo',
-   --    },
-   -- },
+   ssh_domains = {
+      {
+         name = 'OracleUbuntu',
+         remote_address = 'a.sharezhou.eu.org',
+         username = 'ubuntu',
+      },
+   },
    -- ref: https://wezfurlong.org/wezterm/config/lua/WslDomain.html
    -- wsl_domains = {
    --    {

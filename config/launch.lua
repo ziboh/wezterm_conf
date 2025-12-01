@@ -13,8 +13,13 @@ options.launch_menu = {
       domain = { DomainName = 'local' },
    },
    {
-      label = 'Orcal Cloud',
-      args = { 'mosh.exe', 'ubuntu@oraclecloud' },
+      label = 'Orcal Cloud A',
+      args = { 'ssh', 'ubuntu@a.sharezhou.eu.org' },
+      domain = { DomainName = 'local' },
+   },
+   {
+      label = 'Orcal Cloud B',
+      args = { 'ssh', 'ubuntu@b.sharezhou.eu.org' },
       domain = { DomainName = 'local' },
    },
    { label = 'Command Prompt', args = { 'cmd' }, domain = { DomainName = 'local' } },
