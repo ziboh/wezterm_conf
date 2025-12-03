@@ -1,8 +1,7 @@
 local wezterm = require('wezterm')
-local platform = require('utils.platform')
 
 local font = 'Maple Mono NF CN'
-local font_size = platform().is_win and 14 or 9
+local font_size = 14
 
 return {
    font = wezterm.font(font),
