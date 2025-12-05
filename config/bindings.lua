@@ -60,6 +60,7 @@ local keys = {
    -- tabs --
    -- tabs: spawn+close
    { key = 'w', mods = mod.SUPER_REV, action = act.CloseCurrentTab({ confirm = false }) },
+   { key = 'w', mods = mod.SUPER, action = act.CloseCurrentPane({ confirm = true }) },
    {
       key = '1',
       mods = mod.SUPER,
@@ -148,7 +149,6 @@ local keys = {
 
    -- panes: zoom+close pane
    { key = 'Enter', mods = mod.SUPER, action = act.TogglePaneZoomState },
-   { key = 'w', mods = mod.SUPER, action = act.CloseCurrentPane({ confirm = false }) },
 
    -- panes: navigation
    { key = 'k', mods = mod.SUPER_REV, action = act.ActivatePaneDirection('Up') },
