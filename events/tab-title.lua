@@ -19,20 +19,8 @@ local colors = {
    hover     = { bg = '#587d8c', fg = '#1c1b19' },
 }
 
-local _set_process_name = function(s)
-   local a = string.gsub(s, '(.*[/\\])(.*)', '%2')
-   return a:gsub('%.exe$', '')
-end
-
-local _set_title = function(process_name, base_title, max_width, inset)
-   local title
+local _set_title = function(title, max_width, inset)
    inset = inset or 4
-
-   if process_name:len() > 0 then
-      title = '[' .. process_name .. '] ' .. base_title
-   else
-      title = base_title
-   end
 
    if title:len() > max_width - inset then
       local diff = title:len() - max_width + inset
@@ -60,20 +48,6 @@ local _push = function(bg, fg, attribute, text)
    table.insert(__cells__, { Text = text })
 end
 
-local simplify_process_name = function(process_name)
-   local name_table = {
-      wslhost = 'wsl',
-      ['mosh-client'] = 'mosh',
-   }
-
-   local new_name = name_table[process_name]
-   if new_name ~= nil then
-      return new_name
-   else
-      return process_name
-   end
-end
-
 local simplify_title = function(title)
    local new_title = title:match('%s*%[[^]]+%]%s*(.*)')
    if new_title == nil then
@@ -88,12 +62,10 @@ M.setup = function()
       __cells__ = {}
       local bg
       local fg
-      local process_name = _set_process_name(tab.active_pane.foreground_process_name)
-      process_name = simplify_process_name(process_name)
       local is_admin = _check_if_admin(tab.active_pane.title)
 
       local title = simplify_title(tab.active_pane.title)
-      title = _set_title(process_name, title, max_width, (is_admin and 8))
+      title = _set_title(title, max_width, (is_admin and 8))
 
       -- local title = _set_process_name(tab.active_pane.tty_name)
       if tab.is_active then

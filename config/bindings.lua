@@ -82,7 +82,7 @@ local keys = {
       mods = mod.SUPER,
       action = wezterm.action.SpawnCommandInNewTab({
          label = 'SSH OracleCloud',
-         args = { 'ssh', 'ubuntu@oraclecloud' },
+         args = { 'ssh', 'ubuntu@b.sharezhou.eu.org' },
          domain = { DomainName = 'local' },
       }),
    },
